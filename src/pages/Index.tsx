@@ -1,58 +1,56 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '../components/GameCard';
-import { Timer } from '../components/Timer';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { GameHeader } from '../components/GameHeader';
 
-// Dados das cartas com personagens dos jogos/anime - usando imagens de placeholder
+// Dados das cartas com personagens dos jogos/anime - usando imagens com rostos de personagens
 const cardData = [
   { 
     id: 1, 
     name: 'Fortnite - Jonesy', 
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=face', 
+    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100&h=100&fit=crop&crop=face', 
     theme: 'fortnite' 
   },
   { 
     id: 2, 
     name: 'Free Fire - Kelly', 
-    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop', 
+    image: 'https://images.unsplash.com/photo-1494790108755-2616c5e0c14b?w=100&h=100&fit=crop&crop=face', 
     theme: 'freefire' 
   },
   { 
     id: 3, 
     name: 'PUBG - Player', 
-    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=100&h=100&fit=crop&crop=face', 
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face', 
     theme: 'pubg' 
   },
   { 
     id: 4, 
     name: 'Valorant - Jett', 
-    image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=100&h=100&fit=crop', 
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', 
     theme: 'valorant' 
   },
   { 
     id: 5, 
     name: 'Naruto - Naruto', 
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=center', 
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face', 
     theme: 'naruto' 
   },
   { 
     id: 6, 
     name: 'Fortnite - Peely', 
-    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop&crop=center', 
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', 
     theme: 'fortnite' 
   },
   { 
     id: 7, 
     name: 'Free Fire - Chrono', 
-    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=100&h=100&fit=crop', 
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face', 
     theme: 'freefire' 
   },
   { 
     id: 8, 
     name: 'PUBG - Helmet', 
-    image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=100&h=100&fit=crop&crop=center', 
+    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face', 
     theme: 'pubg' 
   },
 ];
@@ -73,7 +71,6 @@ const Index = () => {
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
   const [isGameActive, setIsGameActive] = useState(false);
   const [attempts, setAttempts] = useState(0);
-  const [gameStartTime, setGameStartTime] = useState<number | null>(null);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -90,7 +87,6 @@ const Index = () => {
     setMatchedPairs([]);
     setIsGameActive(false);
     setAttempts(0);
-    setGameStartTime(null);
     setGameCompleted(false);
     setIsProcessing(false);
   }, []);
@@ -111,7 +107,6 @@ const Index = () => {
 
     if (!isGameActive) {
       setIsGameActive(true);
-      setGameStartTime(Date.now());
     }
 
     const newFlippedCards = [...flippedCards, cardId];
@@ -171,10 +166,6 @@ const Index = () => {
         <div className="flex flex-col lg:flex-row gap-6 mt-8">
           {/* Painel lateral com informações */}
           <div className="lg:w-80 space-y-4">
-            <Timer 
-              isActive={isGameActive && !gameCompleted} 
-              startTime={gameStartTime}
-            />
             <ScoreBoard 
               attempts={attempts}
               matchedPairs={matchedPairs.length / 2}
