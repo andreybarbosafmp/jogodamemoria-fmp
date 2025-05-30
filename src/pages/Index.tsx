@@ -5,16 +5,56 @@ import { Timer } from '../components/Timer';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { GameHeader } from '../components/GameHeader';
 
-// Dados das cartas com personagens dos jogos/anime
+// Dados das cartas com personagens dos jogos/anime - usando imagens de placeholder
 const cardData = [
-  { id: 1, name: 'Fortnite - Jonesy', image: '🎮', theme: 'fortnite' },
-  { id: 2, name: 'Free Fire - Kelly', image: '🔥', theme: 'freefire' },
-  { id: 3, name: 'PUBG - Player', image: '🪖', theme: 'pubg' },
-  { id: 4, name: 'Valorant - Jett', image: '⚡', theme: 'valorant' },
-  { id: 5, name: 'Naruto - Naruto', image: '🍥', theme: 'naruto' },
-  { id: 6, name: 'Fortnite - Peely', image: '🍌', theme: 'fortnite' },
-  { id: 7, name: 'Free Fire - Chrono', image: '⏰', theme: 'freefire' },
-  { id: 8, name: 'PUBG - Helmet', image: '🎯', theme: 'pubg' },
+  { 
+    id: 1, 
+    name: 'Fortnite - Jonesy', 
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=face', 
+    theme: 'fortnite' 
+  },
+  { 
+    id: 2, 
+    name: 'Free Fire - Kelly', 
+    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop', 
+    theme: 'freefire' 
+  },
+  { 
+    id: 3, 
+    name: 'PUBG - Player', 
+    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=100&h=100&fit=crop&crop=face', 
+    theme: 'pubg' 
+  },
+  { 
+    id: 4, 
+    name: 'Valorant - Jett', 
+    image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=100&h=100&fit=crop', 
+    theme: 'valorant' 
+  },
+  { 
+    id: 5, 
+    name: 'Naruto - Naruto', 
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=center', 
+    theme: 'naruto' 
+  },
+  { 
+    id: 6, 
+    name: 'Fortnite - Peely', 
+    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop&crop=center', 
+    theme: 'fortnite' 
+  },
+  { 
+    id: 7, 
+    name: 'Free Fire - Chrono', 
+    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=100&h=100&fit=crop', 
+    theme: 'freefire' 
+  },
+  { 
+    id: 8, 
+    name: 'PUBG - Helmet', 
+    image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=100&h=100&fit=crop&crop=center', 
+    theme: 'pubg' 
+  },
 ];
 
 // Algoritmo Fisher-Yates para embaralhar
@@ -55,12 +95,10 @@ const Index = () => {
     setIsProcessing(false);
   }, []);
 
-  // Inicializar jogo ao carregar
   useEffect(() => {
     initializeGame();
   }, [initializeGame]);
 
-  // Função para virar carta
   const flipCard = useCallback((cardId: number) => {
     if (
       isProcessing ||
@@ -71,7 +109,6 @@ const Index = () => {
       return;
     }
 
-    // Iniciar cronômetro na primeira jogada
     if (!isGameActive) {
       setIsGameActive(true);
       setGameStartTime(Date.now());
@@ -80,7 +117,6 @@ const Index = () => {
     const newFlippedCards = [...flippedCards, cardId];
     setFlippedCards(newFlippedCards);
 
-    // Se duas cartas foram viradas
     if (newFlippedCards.length === 2) {
       setIsProcessing(true);
       const [firstCardId, secondCardId] = newFlippedCards;
@@ -89,17 +125,14 @@ const Index = () => {
 
       setTimeout(() => {
         if (firstCard.id === secondCard.id) {
-          // Par encontrado!
           setMatchedPairs(prev => [...prev, firstCardId, secondCardId]);
           setFlippedCards([]);
           
-          // Verificar se o jogo foi completado
           if (matchedPairs.length + 2 === cards.length) {
             setGameCompleted(true);
             setIsGameActive(false);
           }
         } else {
-          // Par errado - reiniciar o jogo
           setAttempts(prev => prev + 1);
           setTimeout(() => {
             initializeGame();
@@ -110,7 +143,6 @@ const Index = () => {
     }
   }, [flippedCards, matchedPairs, cards, isGameActive, isProcessing, initializeGame]);
 
-  // Função para reiniciar manualmente
   const restartGame = () => {
     initializeGame();
   };
@@ -166,7 +198,6 @@ const Index = () => {
             )}
           </div>
 
-          {/* Grid do jogo */}
           <div className="flex-1">
             <div className="grid grid-cols-4 gap-3 md:gap-4 max-w-2xl mx-auto">
               {cards.map((card) => (
@@ -181,7 +212,6 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Instruções */}
             <div className="mt-8 text-center text-white/80 max-w-md mx-auto">
               <p className="text-sm md:text-base">
                 🎯 Encontre os pares de cartas iguais! <br />

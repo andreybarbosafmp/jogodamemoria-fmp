@@ -6,7 +6,7 @@ export const GameHeader: React.FC = () => {
     <div className="text-center mb-8">
       <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
         <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-          🎮 Memory Game
+          🎮 Game da Memória
         </span>
       </h1>
       <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">

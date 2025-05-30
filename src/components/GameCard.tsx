@@ -65,12 +65,27 @@ export const Card: React.FC<CardProps> = ({
             bg-gradient-to-br ${themeGradient}
             border-2 border-white/30 flex flex-col items-center justify-center p-2
             ${isMatched ? 'ring-4 ring-green-400 ring-opacity-70' : ''}
-            transition-all duration-200
+            transition-all duration-200 overflow-hidden
           `}
         >
-          <div className="text-3xl md:text-4xl mb-1">{card.image}</div>
-          <div className="text-white text-xs md:text-sm text-center font-semibold leading-tight">
-            {card.name.split(' - ')[1]}
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <img 
+              src={card.image} 
+              alt={card.name}
+              className="w-12 h-12 md:w-16 md:h-16 object-cover rounded-lg mb-1 border-2 border-white/20"
+              onError={(e) => {
+                // Fallback para emoji se a imagem não carregar
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling!.textContent = card.name.includes('Fortnite') ? '🎮' : 
+                  card.name.includes('Free Fire') ? '🔥' : 
+                  card.name.includes('PUBG') ? '🪖' : 
+                  card.name.includes('Valorant') ? '⚡' : '🍥';
+              }}
+            />
+            <div className="text-2xl md:text-3xl mb-1 hidden"></div>
+            <div className="text-white text-xs md:text-sm text-center font-semibold leading-tight">
+              {card.name.split(' - ')[1]}
+            </div>
           </div>
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
           
