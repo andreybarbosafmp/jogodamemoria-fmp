@@ -63,33 +63,25 @@ export const Card: React.FC<CardProps> = ({
           className={`
             absolute inset-0 w-full h-full rounded-xl shadow-lg backface-hidden rotate-y-180
             bg-gradient-to-br ${themeGradient}
-            border-2 border-white/30 flex flex-col items-center justify-center p-3
+            border-2 border-white/30 flex flex-col items-center justify-center p-2
             ${isMatched ? 'ring-4 ring-green-400 ring-opacity-70' : ''}
             transition-all duration-200 overflow-hidden
           `}
         >
           <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-3 border-white/30 mb-2 bg-white/10">
+            <div className="w-full h-full rounded-lg overflow-hidden border-2 border-white/30 bg-white/10">
               <img 
                 src={card.image} 
                 alt={card.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  // Fallback para emoji se a imagem não carregar
+                  console.log('Erro ao carregar imagem:', card.image);
                   e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling!.textContent = card.name.includes('Fortnite') ? '🎮' : 
-                    card.name.includes('Free Fire') ? '🔥' : 
-                    card.name.includes('PUBG') ? '🪖' : 
-                    card.name.includes('Valorant') ? '⚡' : '🍥';
                 }}
               />
-              <div className="text-3xl md:text-4xl hidden flex items-center justify-center w-full h-full"></div>
-            </div>
-            <div className="text-white text-xs md:text-sm text-center font-semibold leading-tight">
-              {card.name.split(' - ')[1]}
             </div>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl" />
           
           {isMatched && (
             <div className="absolute top-2 right-2 text-green-400 text-xl">

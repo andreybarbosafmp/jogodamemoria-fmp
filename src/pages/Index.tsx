@@ -3,54 +3,54 @@ import { Card } from '../components/GameCard';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { GameHeader } from '../components/GameHeader';
 
-// Dados das cartas com personagens dos jogos/anime - usando imagens com rostos de personagens
+// Dados das cartas com personagens dos jogos/anime - usando as imagens enviadas
 const cardData = [
   { 
     id: 1, 
-    name: 'Fortnite - Jonesy', 
-    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100&h=100&fit=crop&crop=face', 
+    name: 'Fortnite - Beef Boss', 
+    image: '/lovable-uploads/fedc81d9-f4ee-4815-ae9e-a18ad7f9850d.png', 
     theme: 'fortnite' 
   },
   { 
     id: 2, 
     name: 'Free Fire - Kelly', 
-    image: 'https://images.unsplash.com/photo-1494790108755-2616c5e0c14b?w=100&h=100&fit=crop&crop=face', 
+    image: '/lovable-uploads/ecb904c2-1bdc-404a-b7c2-a34dc6446527.png', 
     theme: 'freefire' 
   },
   { 
     id: 3, 
-    name: 'PUBG - Player', 
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face', 
+    name: 'PUBG - Soldier', 
+    image: '/lovable-uploads/1722388b-732d-44b7-869e-bd6636af154e.png', 
     theme: 'pubg' 
   },
   { 
     id: 4, 
     name: 'Valorant - Jett', 
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', 
+    image: '/lovable-uploads/ef5dc821-236a-4021-8d95-4f9397e17f6c.png', 
     theme: 'valorant' 
   },
   { 
     id: 5, 
     name: 'Naruto - Naruto', 
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face', 
+    image: '/lovable-uploads/ebbf342d-b5c3-4bd1-921c-a39d915ed903.png', 
     theme: 'naruto' 
   },
   { 
     id: 6, 
-    name: 'Fortnite - Peely', 
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', 
+    name: 'Fortnite - Carbide', 
+    image: '/lovable-uploads/fedc81d9-f4ee-4815-ae9e-a18ad7f9850d.png', 
     theme: 'fortnite' 
   },
   { 
     id: 7, 
     name: 'Free Fire - Chrono', 
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face', 
+    image: '/lovable-uploads/ecb904c2-1bdc-404a-b7c2-a34dc6446527.png', 
     theme: 'freefire' 
   },
   { 
     id: 8, 
     name: 'PUBG - Helmet', 
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face', 
+    image: '/lovable-uploads/1722388b-732d-44b7-869e-bd6636af154e.png', 
     theme: 'pubg' 
   },
 ];
