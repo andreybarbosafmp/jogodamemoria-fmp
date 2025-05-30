@@ -1,7 +1,10 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '../components/GameCard';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { GameHeader } from '../components/GameHeader';
+import { PlayerNameDialog } from '../components/PlayerNameDialog';
+import { RankingDialog } from '../components/RankingDialog';
 
 // Dados das cartas com personagens dos jogos/anime - usando as imagens enviadas
 const cardData = [
@@ -35,24 +38,6 @@ const cardData = [
     image: '/lovable-uploads/ebbf342d-b5c3-4bd1-921c-a39d915ed903.png', 
     theme: 'naruto' 
   },
-  { 
-    id: 6, 
-    name: 'Fortnite - Carbide', 
-    image: '/lovable-uploads/fedc81d9-f4ee-4815-ae9e-a18ad7f9850d.png', 
-    theme: 'fortnite' 
-  },
-  { 
-    id: 7, 
-    name: 'Free Fire - Chrono', 
-    image: '/lovable-uploads/ecb904c2-1bdc-404a-b7c2-a34dc6446527.png', 
-    theme: 'freefire' 
-  },
-  { 
-    id: 8, 
-    name: 'PUBG - Helmet', 
-    image: '/lovable-uploads/1722388b-732d-44b7-869e-bd6636af154e.png', 
-    theme: 'pubg' 
-  },
 ];
 
 // Algoritmo Fisher-Yates para embaralhar
@@ -73,6 +58,9 @@ const Index = () => {
   const [attempts, setAttempts] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showPlayerDialog, setShowPlayerDialog] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
+  const [playerName, setPlayerName] = useState('');
 
   // Inicializar o jogo
   const initializeGame = useCallback(() => {
@@ -89,6 +77,7 @@ const Index = () => {
     setAttempts(0);
     setGameCompleted(false);
     setIsProcessing(false);
+    setPlayerName('');
   }, []);
 
   useEffect(() => {
@@ -118,6 +107,8 @@ const Index = () => {
       const firstCard = cards.find(card => card.uniqueId === firstCardId);
       const secondCard = cards.find(card => card.uniqueId === secondCardId);
 
+      setAttempts(prev => prev + 1);
+
       setTimeout(() => {
         if (firstCard.id === secondCard.id) {
           setMatchedPairs(prev => [...prev, firstCardId, secondCardId]);
@@ -126,17 +117,32 @@ const Index = () => {
           if (matchedPairs.length + 2 === cards.length) {
             setGameCompleted(true);
             setIsGameActive(false);
+            setShowPlayerDialog(true);
           }
         } else {
-          setAttempts(prev => prev + 1);
-          setTimeout(() => {
-            initializeGame();
-          }, 500);
+          setFlippedCards([]);
         }
         setIsProcessing(false);
       }, 1000);
     }
-  }, [flippedCards, matchedPairs, cards, isGameActive, isProcessing, initializeGame]);
+  }, [flippedCards, matchedPairs, cards, isGameActive, isProcessing]);
+
+  const savePlayerScore = (name: string) => {
+    const ranking = JSON.parse(localStorage.getItem('gameRanking') || '[]');
+    const newScore = {
+      name,
+      attempts,
+      pairs: matchedPairs.length / 2,
+      date: new Date().toLocaleDateString()
+    };
+    
+    ranking.push(newScore);
+    ranking.sort((a: any, b: any) => a.attempts - b.attempts);
+    
+    localStorage.setItem('gameRanking', JSON.stringify(ranking));
+    setPlayerName(name);
+    setShowPlayerDialog(false);
+  };
 
   const restartGame = () => {
     initializeGame();
@@ -181,10 +187,17 @@ const Index = () => {
               🔄 Novo Jogo
             </button>
 
-            {gameCompleted && (
+            <button
+              onClick={() => setShowRanking(true)}
+              className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:from-yellow-600 hover:to-orange-700 transform hover:scale-105 transition-all duration-200"
+            >
+              🏆 Ver Ranking
+            </button>
+
+            {gameCompleted && playerName && (
               <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white p-4 rounded-xl text-center animate-bounce">
-                <h3 className="font-bold text-lg">🎉 Parabéns!</h3>
-                <p className="text-sm">Você completou o jogo!</p>
+                <h3 className="font-bold text-lg">🎉 Parabéns {playerName}!</h3>
+                <p className="text-sm">Você completou em {attempts} tentativas!</p>
               </div>
             )}
           </div>
@@ -206,12 +219,23 @@ const Index = () => {
             <div className="mt-8 text-center text-white/80 max-w-md mx-auto">
               <p className="text-sm md:text-base">
                 🎯 Encontre os pares de cartas iguais! <br />
-                ⚠️ Cuidado: se errar, o jogo reinicia automaticamente!
+                💡 As cartas corretas ficam viradas para você continuar jogando!
               </p>
             </div>
           </div>
         </div>
       </div>
+
+      <PlayerNameDialog 
+        open={showPlayerDialog}
+        onSave={savePlayerScore}
+        onClose={() => setShowPlayerDialog(false)}
+      />
+
+      <RankingDialog 
+        open={showRanking}
+        onClose={() => setShowRanking(false)}
+      />
     </div>
   );
 };
