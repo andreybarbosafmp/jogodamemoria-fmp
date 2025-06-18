@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text3D, Center, Environment } from '@react-three/drei';
-import { Mesh } from 'three';
+import { Mesh, Group } from 'three';
 
 function RotatingCube() {
   const meshRef = useRef<Mesh>(null);
@@ -23,17 +23,17 @@ function RotatingCube() {
 }
 
 function FloatingScale() {
-  const meshRef = useRef<Mesh>(null);
+  const groupRef = useRef<Group>(null);
   
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.3;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.3;
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.5;
     }
   });
 
   return (
-    <group ref={meshRef} position={[-2, 0, 0]}>
+    <group ref={groupRef} position={[-2, 0, 0]}>
       <mesh position={[0, 0.5, 0]}>
         <cylinderGeometry args={[0.1, 0.1, 1]} />
         <meshStandardMaterial color="#1e40af" />
