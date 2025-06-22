@@ -5,9 +5,10 @@ import { ScoreBoard } from '../components/ScoreBoard';
 import { GameHeader } from '../components/GameHeader';
 import { PlayerNameDialog } from '../components/PlayerNameDialog';
 import { RankingDialog } from '../components/RankingDialog';
+import { ThemeSelector } from '../components/ThemeSelector';
 
-// Dados das cartas com personagens dos jogos/anime - usando as imagens enviadas
-const cardData = [
+// Dados das cartas com personagens dos jogos - usando as imagens enviadas
+const gameThemeCards = [
   { 
     id: 1, 
     name: 'Fortnite - Beef Boss', 
@@ -40,6 +41,58 @@ const cardData = [
   },
 ];
 
+// Dados das cartas com desenhos infantis - usando as novas imagens
+const kidsThemeCards = [
+  { 
+    id: 6, 
+    name: 'Bela e a Fera - Bela', 
+    image: '/lovable-uploads/f0f4574c-432b-4b21-ba56-ddcb7974b2c5.png', 
+    theme: 'princess' 
+  },
+  { 
+    id: 7, 
+    name: 'Bob Esponja', 
+    image: '/lovable-uploads/d9c47c22-6cc8-4f3e-b0d2-4966f7bae3ab.png', 
+    theme: 'spongebob' 
+  },
+  { 
+    id: 8, 
+    name: 'Chapeuzinho Vermelho', 
+    image: '/lovable-uploads/97f92170-54ae-43f2-958f-5455db3e9704.png', 
+    theme: 'fairytale' 
+  },
+  { 
+    id: 9, 
+    name: 'Peppa Pig', 
+    image: '/lovable-uploads/47605ec4-6b32-4580-a0ae-70c00d936370.png', 
+    theme: 'peppa' 
+  },
+  { 
+    id: 10, 
+    name: 'Dora Aventureira', 
+    image: '/lovable-uploads/1c4b2125-a996-446c-ae8b-61f640c4b69b.png', 
+    theme: 'dora' 
+  },
+  { 
+    id: 11, 
+    name: 'Galinha Pintadinha', 
+    image: '/lovable-uploads/3c2cdcd2-6155-49bf-af3b-99e2279a31da.png', 
+    theme: 'galinha' 
+  },
+  { 
+    id: 12, 
+    name: 'Mickey Mouse', 
+    image: '/lovable-uploads/26de4681-453a-4469-9ef2-0eed8a8fe3c3.png', 
+    theme: 'mickey' 
+  },
+  { 
+    id: 13, 
+    name: 'Minnie Mouse', 
+    image: '/lovable-uploads/f5b52fbb-732d-451f-96b6-df9b9c32750f.png', 
+    theme: 'minnie' 
+  },
+];
+
 // Algoritmo Fisher-Yates para embaralhar
 const shuffleArray = (array: any[]) => {
   const shuffled = [...array];
@@ -50,7 +103,10 @@ const shuffleArray = (array: any[]) => {
   return shuffled;
 };
 
+type Theme = 'games' | 'kids';
+
 const Index = () => {
+  const [selectedTheme, setSelectedTheme] = useState<Theme>('games');
   const [cards, setCards] = useState<any[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
@@ -64,7 +120,8 @@ const Index = () => {
 
   // Inicializar o jogo
   const initializeGame = useCallback(() => {
-    const duplicatedCards = [...cardData, ...cardData];
+    const currentThemeCards = selectedTheme === 'games' ? gameThemeCards : kidsThemeCards.slice(0, 5);
+    const duplicatedCards = [...currentThemeCards, ...currentThemeCards];
     const shuffledCards = shuffleArray(duplicatedCards).map((card, index) => ({
       ...card,
       uniqueId: index,
@@ -78,7 +135,7 @@ const Index = () => {
     setGameCompleted(false);
     setIsProcessing(false);
     setPlayerName('');
-  }, []);
+  }, [selectedTheme]);
 
   useEffect(() => {
     initializeGame();
@@ -133,7 +190,8 @@ const Index = () => {
       name,
       attempts,
       pairs: matchedPairs.length / 2,
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleDateString(),
+      theme: selectedTheme
     };
     
     ranking.push(newScore);
@@ -148,14 +206,26 @@ const Index = () => {
     initializeGame();
   };
 
+  const handleThemeChange = (theme: Theme) => {
+    setSelectedTheme(theme);
+  };
+
+  const currentThemeCards = selectedTheme === 'games' ? gameThemeCards : kidsThemeCards.slice(0, 5);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div className={`min-h-screen relative overflow-hidden ${
+      selectedTheme === 'games' 
+        ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
+        : 'bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-300'
+    }`}>
       {/* Background particles effect */}
       <div className="absolute inset-0 opacity-20">
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-white rounded-full animate-pulse"
+            className={`absolute w-2 h-2 rounded-full animate-pulse ${
+              selectedTheme === 'games' ? 'bg-white' : 'bg-yellow-300'
+            }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -167,7 +237,14 @@ const Index = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-6">
-        <GameHeader />
+        <GameHeader selectedTheme={selectedTheme} />
+        
+        <div className="flex justify-center mb-6">
+          <ThemeSelector 
+            selectedTheme={selectedTheme} 
+            onThemeChange={handleThemeChange}
+          />
+        </div>
         
         <div className="flex flex-col lg:flex-row gap-6 mt-8">
           {/* Painel lateral com informações */}
@@ -175,7 +252,7 @@ const Index = () => {
             <ScoreBoard 
               attempts={attempts}
               matchedPairs={matchedPairs.length / 2}
-              totalPairs={cardData.length}
+              totalPairs={currentThemeCards.length}
               gameCompleted={gameCompleted}
             />
             
@@ -212,11 +289,14 @@ const Index = () => {
                   isMatched={matchedPairs.includes(card.uniqueId)}
                   onClick={() => flipCard(card.uniqueId)}
                   disabled={isProcessing}
+                  selectedTheme={selectedTheme}
                 />
               ))}
             </div>
 
-            <div className="mt-8 text-center text-white/80 max-w-md mx-auto">
+            <div className={`mt-8 text-center max-w-md mx-auto ${
+              selectedTheme === 'games' ? 'text-white/80' : 'text-purple-800'
+            }`}>
               <p className="text-sm md:text-base">
                 🎯 Encontre os pares de cartas iguais! <br />
                 💡 As cartas corretas ficam viradas para você continuar jogando!
