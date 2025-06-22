@@ -33,6 +33,10 @@ const kidsThemeColors = {
   galinha: 'from-blue-400 to-cyan-500',
   mickey: 'from-red-400 to-pink-500',
   minnie: 'from-pink-400 to-purple-500',
+  fairy: 'from-green-300 to-emerald-400',
+  powerpuff: 'from-blue-400 to-purple-500',
+  mundobita: 'from-cyan-400 to-blue-500',
+  sandy: 'from-purple-400 to-pink-500',
 };
 
 export const Card: React.FC<CardProps> = ({ 

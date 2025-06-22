@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '../components/GameCard';
 import { ScoreBoard } from '../components/ScoreBoard';
@@ -6,8 +5,9 @@ import { GameHeader } from '../components/GameHeader';
 import { PlayerNameDialog } from '../components/PlayerNameDialog';
 import { RankingDialog } from '../components/RankingDialog';
 import { ThemeSelector } from '../components/ThemeSelector';
+import { GenderSelector } from '../components/GenderSelector';
 
-// Dados das cartas com personagens dos jogos - usando as imagens enviadas
+// Dados das cartas com personagens dos jogos - usando as imagens originais
 const gameThemeCards = [
   { 
     id: 1, 
@@ -41,55 +41,83 @@ const gameThemeCards = [
   },
 ];
 
-// Dados das cartas com desenhos infantis - usando as novas imagens
-const kidsThemeCards = [
+// Dados das cartas femininas - usando as novas imagens
+const feminineThemeCards = [
   { 
     id: 6, 
-    name: 'Bela e a Fera - Bela', 
-    image: '/lovable-uploads/f0f4574c-432b-4b21-ba56-ddcb7974b2c5.png', 
-    theme: 'princess' 
+    name: 'Chapeuzinho Vermelho', 
+    image: '/lovable-uploads/91a53b40-b78e-4ced-b76b-f2109e0698d8.png', 
+    theme: 'fairytale' 
   },
   { 
     id: 7, 
+    name: 'Peppa Pig', 
+    image: '/lovable-uploads/29a093f2-c269-41ff-ae20-7ac45d45c72d.png', 
+    theme: 'peppa' 
+  },
+  { 
+    id: 8, 
+    name: 'Fadinha', 
+    image: '/lovable-uploads/165abf4b-042e-4e03-af49-cf712d28236b.png', 
+    theme: 'fairy' 
+  },
+  { 
+    id: 9, 
+    name: 'As Meninas Superpoderosas', 
+    image: '/lovable-uploads/9bff270c-bab7-4cff-af1c-aef8e8478caa.png', 
+    theme: 'powerpuff' 
+  },
+  { 
+    id: 10, 
+    name: 'Minnie Mouse', 
+    image: '/lovable-uploads/77232230-d261-4dec-8560-b6c2d6c4fe8e.png', 
+    theme: 'minnie' 
+  },
+  { 
+    id: 11, 
+    name: 'Bela e a Fera - Bela', 
+    image: '/lovable-uploads/fd88df92-63bf-4792-a4d1-76d1c067c7a9.png', 
+    theme: 'princess' 
+  },
+];
+
+// Dados das cartas masculinas - usando imagens originais do tema kids
+const masculineThemeCards = [
+  { 
+    id: 12, 
     name: 'Bob Esponja', 
     image: '/lovable-uploads/d9c47c22-6cc8-4f3e-b0d2-4966f7bae3ab.png', 
     theme: 'spongebob' 
   },
   { 
-    id: 8, 
-    name: 'Chapeuzinho Vermelho', 
-    image: '/lovable-uploads/97f92170-54ae-43f2-958f-5455db3e9704.png', 
-    theme: 'fairytale' 
-  },
-  { 
-    id: 9, 
-    name: 'Peppa Pig', 
-    image: '/lovable-uploads/47605ec4-6b32-4580-a0ae-70c00d936370.png', 
-    theme: 'peppa' 
-  },
-  { 
-    id: 10, 
+    id: 13, 
     name: 'Dora Aventureira', 
-    image: '/lovable-uploads/1c4b2125-a996-446c-ae8b-61f640c4b69b.png', 
+    image: '/lovable-uploads/0eea5e3a-d26a-4c38-8374-b697ff59e797.png', 
     theme: 'dora' 
   },
   { 
-    id: 11, 
+    id: 14, 
     name: 'Galinha Pintadinha', 
-    image: '/lovable-uploads/3c2cdcd2-6155-49bf-af3b-99e2279a31da.png', 
+    image: '/lovable-uploads/9ce49705-f81b-409a-afb9-fb34a9b67b9c.png', 
     theme: 'galinha' 
   },
   { 
-    id: 12, 
+    id: 15, 
     name: 'Mickey Mouse', 
     image: '/lovable-uploads/26de4681-453a-4469-9ef2-0eed8a8fe3c3.png', 
     theme: 'mickey' 
   },
   { 
-    id: 13, 
-    name: 'Minnie Mouse', 
-    image: '/lovable-uploads/f5b52fbb-732d-451f-96b6-df9b9c32750f.png', 
-    theme: 'minnie' 
+    id: 16, 
+    name: 'Mundo Bita', 
+    image: '/lovable-uploads/d5ea5e92-65e9-41e9-b6ea-11c7f3e7a684.png', 
+    theme: 'mundobita' 
+  },
+  { 
+    id: 17, 
+    name: 'Sandy Bob Esponja', 
+    image: '/lovable-uploads/93dbe4f6-5cd3-4a30-a58c-8f0fc439962b.png', 
+    theme: 'sandy' 
   },
 ];
 
@@ -104,9 +132,11 @@ const shuffleArray = (array: any[]) => {
 };
 
 type Theme = 'games' | 'kids';
+type Gender = 'feminine' | 'masculine';
 
 const Index = () => {
   const [selectedTheme, setSelectedTheme] = useState<Theme>('games');
+  const [selectedGender, setSelectedGender] = useState<Gender>('feminine');
   const [cards, setCards] = useState<any[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
@@ -120,7 +150,16 @@ const Index = () => {
 
   // Inicializar o jogo
   const initializeGame = useCallback(() => {
-    const currentThemeCards = selectedTheme === 'games' ? gameThemeCards : kidsThemeCards.slice(0, 5);
+    let currentThemeCards;
+    
+    if (selectedTheme === 'games') {
+      currentThemeCards = gameThemeCards;
+    } else {
+      currentThemeCards = selectedGender === 'feminine' 
+        ? feminineThemeCards.slice(0, 5)
+        : masculineThemeCards.slice(0, 5);
+    }
+    
     const duplicatedCards = [...currentThemeCards, ...currentThemeCards];
     const shuffledCards = shuffleArray(duplicatedCards).map((card, index) => ({
       ...card,
@@ -135,7 +174,7 @@ const Index = () => {
     setGameCompleted(false);
     setIsProcessing(false);
     setPlayerName('');
-  }, [selectedTheme]);
+  }, [selectedTheme, selectedGender]);
 
   useEffect(() => {
     initializeGame();
@@ -191,7 +230,8 @@ const Index = () => {
       attempts,
       pairs: matchedPairs.length / 2,
       date: new Date().toLocaleDateString(),
-      theme: selectedTheme
+      theme: selectedTheme,
+      gender: selectedTheme === 'kids' ? selectedGender : undefined
     };
     
     ranking.push(newScore);
@@ -210,7 +250,21 @@ const Index = () => {
     setSelectedTheme(theme);
   };
 
-  const currentThemeCards = selectedTheme === 'games' ? gameThemeCards : kidsThemeCards.slice(0, 5);
+  const handleGenderChange = (gender: Gender) => {
+    setSelectedGender(gender);
+  };
+
+  const getCurrentThemeCards = () => {
+    if (selectedTheme === 'games') {
+      return gameThemeCards;
+    } else {
+      return selectedGender === 'feminine' 
+        ? feminineThemeCards.slice(0, 5)
+        : masculineThemeCards.slice(0, 5);
+    }
+  };
+
+  const currentThemeCards = getCurrentThemeCards();
 
   return (
     <div className={`min-h-screen relative overflow-hidden ${
@@ -239,10 +293,16 @@ const Index = () => {
       <div className="relative z-10 container mx-auto px-4 py-6">
         <GameHeader selectedTheme={selectedTheme} />
         
-        <div className="flex justify-center mb-6">
+        <div className="flex flex-col items-center mb-6 space-y-4">
           <ThemeSelector 
             selectedTheme={selectedTheme} 
             onThemeChange={handleThemeChange}
+          />
+          
+          <GenderSelector 
+            selectedGender={selectedGender}
+            onGenderChange={handleGenderChange}
+            selectedTheme={selectedTheme}
           />
         </div>
         
