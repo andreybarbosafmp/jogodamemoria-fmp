@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface CardProps {
@@ -13,6 +14,7 @@ interface CardProps {
   onClick: () => void;
   disabled: boolean;
   selectedTheme: 'games' | 'kids';
+  selectedGender?: 'feminine' | 'masculine';
 }
 
 const gameThemeColors = {
@@ -47,14 +49,25 @@ export const Card: React.FC<CardProps> = ({
   isMatched, 
   onClick, 
   disabled,
-  selectedTheme 
+  selectedTheme,
+  selectedGender 
 }) => {
   const themeColors = selectedTheme === 'games' ? gameThemeColors : kidsThemeColors;
   const themeGradient = themeColors[card.theme as keyof typeof themeColors] || 'from-gray-400 to-gray-600';
 
-  const backCardGradient = selectedTheme === 'games'
-    ? 'from-indigo-500 via-purple-500 to-pink-500'
-    : 'from-pink-400 via-purple-400 to-indigo-400';
+  const getBackCardGradient = () => {
+    if (selectedTheme === 'games') {
+      return 'from-indigo-500 via-purple-500 to-pink-500';
+    } else {
+      if (selectedGender === 'masculine') {
+        return 'from-blue-800 via-blue-900 to-indigo-900';
+      } else {
+        return 'from-pink-400 via-purple-400 to-indigo-400';
+      }
+    }
+  };
+
+  const backCardGradient = getBackCardGradient();
 
   return (
     <div 

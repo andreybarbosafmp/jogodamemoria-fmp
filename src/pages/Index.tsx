@@ -354,6 +354,7 @@ const Index = () => {
                   onClick={() => flipCard(card.uniqueId)}
                   disabled={isProcessing}
                   selectedTheme={selectedTheme}
+                  selectedGender={selectedGender}
                 />
               ))}
             </div>
