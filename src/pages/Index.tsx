@@ -222,9 +222,10 @@ const Index = () => {
     if (selectedTheme === 'games') {
       currentThemeCards = gameThemeCards;
     } else {
+      // Selecionar 8 cartas aleatórias das cartas disponíveis para ter um jogo balanceado
       currentThemeCards = selectedGender === 'feminine' 
-        ? feminineThemeCards.slice(0, 5)
-        : masculineThemeCards.slice(0, 5);
+        ? shuffleArray(feminineThemeCards).slice(0, 8)
+        : shuffleArray(masculineThemeCards).slice(0, 5);
     }
     
     const duplicatedCards = [...currentThemeCards, ...currentThemeCards];
@@ -326,8 +327,8 @@ const Index = () => {
       return gameThemeCards;
     } else {
       return selectedGender === 'feminine' 
-        ? feminineThemeCards.slice(0, 5)
-        : masculineThemeCards.slice(0, 5);
+        ? shuffleArray(feminineThemeCards).slice(0, 8)
+        : shuffleArray(masculineThemeCards).slice(0, 5);
     }
   };
 
