@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CardProps {
@@ -42,6 +41,15 @@ const kidsThemeColors = {
   patrulha: 'from-blue-500 to-indigo-600',
   superman: 'from-blue-600 to-red-500',
   monica: 'from-yellow-400 to-orange-500',
+  babyshark: 'from-cyan-400 to-blue-500',
+  batman: 'from-gray-600 to-black',
+  ben10: 'from-green-500 to-emerald-600',
+  monsters: 'from-green-400 to-teal-500',
+  captain: 'from-blue-500 to-red-500',
+  car: 'from-red-400 to-orange-500',
+  spiderman: 'from-red-500 to-blue-600',
+  ironman: 'from-red-500 to-yellow-500',
+  hulk: 'from-green-500 to-green-700',
 };
 
 export const Card: React.FC<CardProps> = ({ 

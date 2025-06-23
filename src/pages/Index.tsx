@@ -173,6 +173,66 @@ const masculineThemeCards = [
     image: '/lovable-uploads/9a43066c-3f95-4220-a5c4-8a1fd18f4304.png', 
     theme: 'superman' 
   },
+  {
+    id: 27,
+    name: 'Baby Shark',
+    image: '/lovable-uploads/0e9275ba-66fe-4732-9005-bccddb4e7b4c.png',
+    theme: 'babyshark'
+  },
+  {
+    id: 28,
+    name: 'Batman',
+    image: '/lovable-uploads/a0d7b3a1-df49-4787-a388-35665821b3db.png',
+    theme: 'batman'
+  },
+  {
+    id: 29,
+    name: 'Ben 10',
+    image: '/lovable-uploads/6365d821-4712-421e-a0e7-1036bf39e4f7.png',
+    theme: 'ben10'
+  },
+  {
+    id: 30,
+    name: 'Mike Wazowski',
+    image: '/lovable-uploads/0259d3fb-a19c-439c-a87e-4d9d77a12f6d.png',
+    theme: 'monsters'
+  },
+  {
+    id: 31,
+    name: 'Bob Esponja',
+    image: '/lovable-uploads/4855f04f-fa76-4266-8051-b96e5e1390e5.png',
+    theme: 'spongebob'
+  },
+  {
+    id: 32,
+    name: 'Capitão América',
+    image: '/lovable-uploads/99c32640-2d0e-4587-bb72-ebae8dd9b144.png',
+    theme: 'captain'
+  },
+  {
+    id: 33,
+    name: 'Carrinho Infantil',
+    image: '/lovable-uploads/9e3b0c75-4b56-4b0a-b67e-1ef496e7bacd.png',
+    theme: 'car'
+  },
+  {
+    id: 34,
+    name: 'Homem-Aranha',
+    image: '/lovable-uploads/5640c918-e8fa-41d1-a900-701f5bb753e3.png',
+    theme: 'spiderman'
+  },
+  {
+    id: 35,
+    name: 'Homem de Ferro',
+    image: '/lovable-uploads/eb83ee62-132c-47d8-a9f7-f7dc12a5a4b3.png',
+    theme: 'ironman'
+  },
+  {
+    id: 36,
+    name: 'Hulk',
+    image: '/lovable-uploads/cb7edbbf-a866-4718-9b88-65d9c901c5df.png',
+    theme: 'hulk'
+  },
 ];
 
 // Algoritmo Fisher-Yates para embaralhar
@@ -225,7 +285,7 @@ const Index = () => {
       // Selecionar 8 cartas aleatórias das cartas disponíveis para ter um jogo balanceado
       currentThemeCards = selectedGender === 'feminine' 
         ? shuffleArray(feminineThemeCards).slice(0, 8)
-        : shuffleArray(masculineThemeCards).slice(0, 5);
+        : shuffleArray(masculineThemeCards).slice(0, 8);
     }
     
     const duplicatedCards = [...currentThemeCards, ...currentThemeCards];
@@ -328,7 +388,7 @@ const Index = () => {
     } else {
       return selectedGender === 'feminine' 
         ? shuffleArray(feminineThemeCards).slice(0, 8)
-        : shuffleArray(masculineThemeCards).slice(0, 5);
+        : shuffleArray(masculineThemeCards).slice(0, 8);
     }
   };
 
