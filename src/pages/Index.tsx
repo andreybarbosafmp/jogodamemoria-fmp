@@ -41,7 +41,7 @@ const gameThemeCards = [
   },
 ];
 
-// Dados das cartas femininas - usando as novas imagens
+// Dados das cartas femininas - usando as novas imagens fornecidas
 const feminineThemeCards = [
   { 
     id: 6, 
@@ -78,6 +78,66 @@ const feminineThemeCards = [
     name: 'Bela e a Fera - Bela', 
     image: '/lovable-uploads/fd88df92-63bf-4792-a4d1-76d1c067c7a9.png', 
     theme: 'princess' 
+  },
+  {
+    id: 17,
+    name: 'Princesa Ariel',
+    image: '/lovable-uploads/ac0f210b-6517-4b68-94e8-f9e0de1fc7d5.png',
+    theme: 'princess'
+  },
+  {
+    id: 18,
+    name: 'Princesa Bela',
+    image: '/lovable-uploads/27affe76-e117-4547-9300-ffada6d3598f.png',
+    theme: 'princess'
+  },
+  {
+    id: 19,
+    name: 'Branca de Neve',
+    image: '/lovable-uploads/742df263-2ebe-4139-bebc-884fdc8bc06b.png',
+    theme: 'princess'
+  },
+  {
+    id: 20,
+    name: 'Dora Aventureira',
+    image: '/lovable-uploads/1788c4d6-c1ce-4508-9573-9fcb9fd69c50.png',
+    theme: 'dora'
+  },
+  {
+    id: 21,
+    name: 'Galinha Pintadinha',
+    image: '/lovable-uploads/d84ec2a4-44b7-4971-8778-c39ed8658ae9.png',
+    theme: 'galinha'
+  },
+  {
+    id: 22,
+    name: 'Princesa Jasmine',
+    image: '/lovable-uploads/ae3a4713-66de-4a3f-bda4-d6a42e1216cf.png',
+    theme: 'princess'
+  },
+  {
+    id: 23,
+    name: 'Lilo e Stitch',
+    image: '/lovable-uploads/2077767b-02b4-4c55-9e47-34fbf8bb24ba.png',
+    theme: 'fairy'
+  },
+  {
+    id: 24,
+    name: 'Turma da Mônica',
+    image: '/lovable-uploads/a2dc2b0a-a2c1-459b-a7ef-c10816eccde1.png',
+    theme: 'monica'
+  },
+  {
+    id: 25,
+    name: 'Rapunzel',
+    image: '/lovable-uploads/54ba9dd7-b66a-4f8d-bc47-668488d0713f.png',
+    theme: 'princess'
+  },
+  {
+    id: 26,
+    name: 'Sandy Bob Esponja',
+    image: '/lovable-uploads/74a89f71-861f-41d8-beb9-5b29d0033d61.png',
+    theme: 'sandy'
   },
 ];
 

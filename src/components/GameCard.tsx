@@ -41,6 +41,7 @@ const kidsThemeColors = {
   patrick: 'from-pink-400 to-red-500',
   patrulha: 'from-blue-500 to-indigo-600',
   superman: 'from-blue-600 to-red-500',
+  monica: 'from-yellow-400 to-orange-500',
 };
 
 export const Card: React.FC<CardProps> = ({ 
