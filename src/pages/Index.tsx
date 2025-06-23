@@ -81,43 +81,37 @@ const feminineThemeCards = [
   },
 ];
 
-// Dados das cartas masculinas - usando imagens originais do tema kids
+// Dados das cartas masculinas - atualizadas com as novas imagens
 const masculineThemeCards = [
   { 
     id: 12, 
-    name: 'Bob Esponja', 
-    image: '/lovable-uploads/d9c47c22-6cc8-4f3e-b0d2-4966f7bae3ab.png', 
-    theme: 'spongebob' 
-  },
-  { 
-    id: 13, 
-    name: 'Dora Aventureira', 
-    image: '/lovable-uploads/0eea5e3a-d26a-4c38-8374-b697ff59e797.png', 
-    theme: 'dora' 
-  },
-  { 
-    id: 14, 
-    name: 'Galinha Pintadinha', 
-    image: '/lovable-uploads/9ce49705-f81b-409a-afb9-fb34a9b67b9c.png', 
-    theme: 'galinha' 
-  },
-  { 
-    id: 15, 
     name: 'Mickey Mouse', 
-    image: '/lovable-uploads/26de4681-453a-4469-9ef2-0eed8a8fe3c3.png', 
+    image: '/lovable-uploads/91befb4f-8b4c-42d3-b1f9-6fed0a353a89.png', 
     theme: 'mickey' 
   },
   { 
-    id: 16, 
+    id: 13, 
     name: 'Mundo Bita', 
-    image: '/lovable-uploads/d5ea5e92-65e9-41e9-b6ea-11c7f3e7a684.png', 
+    image: '/lovable-uploads/91d3592c-d75f-4bc8-94fb-b8808a72c33f.png', 
     theme: 'mundobita' 
   },
   { 
-    id: 17, 
-    name: 'Sandy Bob Esponja', 
-    image: '/lovable-uploads/93dbe4f6-5cd3-4a30-a58c-8f0fc439962b.png', 
-    theme: 'sandy' 
+    id: 14, 
+    name: 'Patrick Estrela', 
+    image: '/lovable-uploads/9e697730-040e-413a-b2c6-db6d27eab4df.png', 
+    theme: 'patrick' 
+  },
+  { 
+    id: 15, 
+    name: 'Patrulha Canina', 
+    image: '/lovable-uploads/7add275f-13c4-4f3e-be94-4fcec215b45c.png', 
+    theme: 'patrulha' 
+  },
+  { 
+    id: 16, 
+    name: 'Superman', 
+    image: '/lovable-uploads/9a43066c-3f95-4220-a5c4-8a1fd18f4304.png', 
+    theme: 'superman' 
   },
 ];
 
@@ -147,6 +141,19 @@ const Index = () => {
   const [showPlayerDialog, setShowPlayerDialog] = useState(false);
   const [showRanking, setShowRanking] = useState(false);
   const [playerName, setPlayerName] = useState('');
+
+  // Função para obter o gradiente de fundo baseado no tema e gênero
+  const getBackgroundGradient = () => {
+    if (selectedTheme === 'games') {
+      return 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900';
+    } else {
+      if (selectedGender === 'masculine') {
+        return 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800';
+      } else {
+        return 'bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-300';
+      }
+    }
+  };
 
   // Inicializar o jogo
   const initializeGame = useCallback(() => {
@@ -267,18 +274,15 @@ const Index = () => {
   const currentThemeCards = getCurrentThemeCards();
 
   return (
-    <div className={`min-h-screen relative overflow-hidden ${
-      selectedTheme === 'games' 
-        ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
-        : 'bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-300'
-    }`}>
+    <div className={`min-h-screen relative overflow-hidden ${getBackgroundGradient()}`}>
       {/* Background particles effect */}
       <div className="absolute inset-0 opacity-20">
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
             className={`absolute w-2 h-2 rounded-full animate-pulse ${
-              selectedTheme === 'games' ? 'bg-white' : 'bg-yellow-300'
+              selectedTheme === 'games' ? 'bg-white' : 
+              selectedGender === 'masculine' ? 'bg-blue-200' : 'bg-yellow-300'
             }`}
             style={{
               left: `${Math.random() * 100}%`,

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CardProps {
@@ -37,6 +36,9 @@ const kidsThemeColors = {
   powerpuff: 'from-blue-400 to-purple-500',
   mundobita: 'from-cyan-400 to-blue-500',
   sandy: 'from-purple-400 to-pink-500',
+  patrick: 'from-pink-400 to-red-500',
+  patrulha: 'from-blue-500 to-indigo-600',
+  superman: 'from-blue-600 to-red-500',
 };
 
 export const Card: React.FC<CardProps> = ({ 
