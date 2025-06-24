@@ -22,6 +22,12 @@ const gameThemeColors = {
   pubg: 'from-yellow-400 to-orange-500',
   valorant: 'from-red-400 to-pink-500',
   naruto: 'from-orange-300 to-yellow-400',
+  fifa: 'from-green-400 to-blue-500',
+  gta: 'from-gray-500 to-black',
+  minecraft: 'from-green-400 to-brown-500',
+  reddead: 'from-red-600 to-orange-700',
+  roblox: 'from-red-500 to-blue-500',
+  legostarwars: 'from-blue-600 to-purple-700',
 };
 
 const kidsThemeColors = {

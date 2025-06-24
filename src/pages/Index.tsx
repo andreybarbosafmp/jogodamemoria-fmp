@@ -39,6 +39,42 @@ const gameThemeCards = [
     image: '/lovable-uploads/ebbf342d-b5c3-4bd1-921c-a39d915ed903.png', 
     theme: 'naruto' 
   },
+  {
+    id: 37,
+    name: 'FIFA 25',
+    image: '/lovable-uploads/838d13dd-a09e-458b-8aaf-1ffa46655cb8.png',
+    theme: 'fifa'
+  },
+  {
+    id: 38,
+    name: 'GTA V',
+    image: '/lovable-uploads/624afbca-6cd5-4caa-a1e5-66fa1bf71d6a.png',
+    theme: 'gta'
+  },
+  {
+    id: 39,
+    name: 'Minecraft',
+    image: '/lovable-uploads/e1a10e1b-a136-4945-8614-d59e53044432.png',
+    theme: 'minecraft'
+  },
+  {
+    id: 40,
+    name: 'Red Dead Online',
+    image: '/lovable-uploads/b986dda5-f105-4b75-bd0e-283c73921387.png',
+    theme: 'reddead'
+  },
+  {
+    id: 41,
+    name: 'Roblox',
+    image: '/lovable-uploads/308c59b4-ca43-4342-b3b3-396629256eed.png',
+    theme: 'roblox'
+  },
+  {
+    id: 42,
+    name: 'LEGO Star Wars',
+    image: '/lovable-uploads/f23450aa-a492-49c1-b8d1-abdf42711d0a.png',
+    theme: 'legostarwars'
+  },
 ];
 
 // Dados das cartas femininas - usando as novas imagens fornecidas
@@ -280,7 +316,8 @@ const Index = () => {
     let currentThemeCards;
     
     if (selectedTheme === 'games') {
-      currentThemeCards = gameThemeCards;
+      // Selecionar 8 cartas aleatórias dos jogos para ter um jogo balanceado
+      currentThemeCards = shuffleArray(gameThemeCards).slice(0, 8);
     } else {
       // Selecionar 8 cartas aleatórias das cartas disponíveis para ter um jogo balanceado
       currentThemeCards = selectedGender === 'feminine' 
@@ -384,7 +421,7 @@ const Index = () => {
 
   const getCurrentThemeCards = () => {
     if (selectedTheme === 'games') {
-      return gameThemeCards;
+      return shuffleArray(gameThemeCards).slice(0, 8);
     } else {
       return selectedGender === 'feminine' 
         ? shuffleArray(feminineThemeCards).slice(0, 8)
